@@ -1,0 +1,61 @@
+﻿@page "/"
+@inherits IndexBase
+
+<PageTitle>Anime online</PageTitle>
+
+<MudPaper>
+    <MudToolBar>
+        <MudSpacer />
+        <MudTextField @bind-Value="SearchQuery"
+                      Adornment="Adornment.Start"
+                      AdornmentIcon="@Icons.Filled.Search"
+                      AdornmentColor="Color.Primary"
+                      Placeholder="Search..."
+                      Margin="Margin.Dense"
+                      Variant="Variant.Outlined"
+                      Clearable="true"
+                      DebounceInterval="5"
+                      OnClearButtonClick="() => SearchList = null"
+                      OnDebounceIntervalElapsed="SearchAnimes" />
+    </MudToolBar>
+    <MudGrid Spacing="2">
+        @if (SearchList == null)
+        {
+            @foreach (var episode in PaginatedList.Results)
+            {
+                <MudItem md="4" xs="12"
+                 @onclick="@(() => NavigationManager.NavigateTo($"/details/{episode.Id}"))">
+                    <AnimeCard Image="@episode.Image">
+                        <Content>
+                            <MudText Typo="Typo.h5">@episode.Title</MudText>
+                            <MudText Typo="Typo.body1"
+                             Align="Align.Center">
+                                @($"Episode {episode.EpisodeNumber}")
+                            </MudText>
+                        </Content>
+                    </AnimeCard>
+                </MudItem>
+            }
+        }
+        else
+        {
+            <MudText>@($"Results found: {SearchList.Results.Count}")</MudText>
+
+            @foreach (var result in SearchList.Results)
+            {
+                <MudItem md="4" xs="12"
+                 @onclick="@(() => NavigationManager.NavigateTo($"/details/{result.Id}"))">
+                    <AnimeCard Image="@result.Image">
+                        <Content>
+                            <MudText Typo="Typo.h5">@result.Title</MudText>
+                            <MudText Typo="Typo.body1"
+                             Align="Align.Center">
+                                @($"Episode {result.ReleaseDate}")
+                            </MudText>
+                        </Content>
+                    </AnimeCard>
+                </MudItem>
+            }
+        }
+    </MudGrid>
+</MudPaper>

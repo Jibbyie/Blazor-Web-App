@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\X00164441_CA3.props" />
+</Project>

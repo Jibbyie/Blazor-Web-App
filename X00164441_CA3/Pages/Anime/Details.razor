@@ -1,0 +1,41 @@
+﻿@page "/details/{AnimeId}"
+@using System.Net;
+
+<AnimeCard Image="@AnimeInfo.Image">
+    <Header>
+        @AnimeInfo.Title
+    </Header>
+    <Content>
+        <MudText Typo="Typo.h5">@($"Type: {AnimeInfo.Type}")</MudText>
+            <MudText Typo="Typo.h5">
+                @($"Plot Summary: {AnimeInfo.Description}")
+        </MudText>
+        <MudText Typo="Typo.h5">@($"Genres: {string.Join(", ", AnimeInfo.Genres ?? Enumerable.Empty<string>())}")</MudText>
+            <MudText Typo="Typo.h5">@($"Released: {AnimeInfo.ReleaseDate}")</MudText>
+            <MudText Typo="Typo.h5">@($"Status: {AnimeInfo.Status}")</MudText>
+        </Content>
+    </AnimeCard>
+
+
+@code {
+    [Parameter]
+    public string AnimeId { get; set; } = null!;
+
+    protected AnimeInfo AnimeInfo { get; set; } = new();
+
+    [Inject]
+    protected IGogoAnimeClient Client { get; set; } = null!;
+
+    [Inject]
+    protected ISnackbar Snackbar { get; set; } = null!;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var (statusCode, info) = await Client.GetAnimeInfo(AnimeId);
+
+        if (statusCode != HttpStatusCode.OK)
+            Snackbar.Add(statusCode.ToString(), Severity.Error);
+        else
+            AnimeInfo = info!;
+    }
+}

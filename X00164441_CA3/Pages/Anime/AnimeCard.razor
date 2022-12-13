@@ -1,0 +1,21 @@
+﻿<MudCard>
+    <MudCardHeader>
+        @Header
+    </MudCardHeader>
+    <MudCardMedia Image="@Image" />
+    <MudCardContent>
+        @Content
+    </MudCardContent>
+</MudCard>
+
+
+@code {
+    [Parameter]
+    public string Image { get; set; } = null!;
+
+    [Parameter]
+    public RenderFragment? Header { get; set; } 
+
+    [Parameter]
+    public RenderFragment Content { get; set; } = null!;
+}
