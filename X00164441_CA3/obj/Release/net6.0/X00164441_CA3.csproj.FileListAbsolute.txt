@@ -839,3 +839,6 @@ C:\Users\jibby\source\repos\AnimeApp\X00164441_CA3\obj\Release\net6.0\X00164441_
 C:\Users\jibby\source\repos\AnimeApp\X00164441_CA3\obj\Release\net6.0\refint\X00164441_CA3.dll
 C:\Users\jibby\source\repos\AnimeApp\X00164441_CA3\obj\Release\net6.0\X00164441_CA3.pdb
 C:\Users\jibby\source\repos\AnimeApp\X00164441_CA3\obj\Release\net6.0\ref\X00164441_CA3.dll
+C:\Users\jibby\source\repos\AnimeApp\X00164441_CA3\bin\Release\net6.0\Pages\Home\Properties\launchSettings.json
+C:\Users\jibby\source\repos\AnimeApp\X00164441_CA3\bin\Release\net6.0\Pages\Home\Properties\ServiceDependencies\GogoAnimeAPI - Web Deploy\profile.arm.json
+C:\Users\jibby\source\repos\AnimeApp\X00164441_CA3\bin\Release\net6.0\Pages\Home\Properties\ServiceDependencies\GogoAnimeAPI - Zip Deploy\profile.arm.json

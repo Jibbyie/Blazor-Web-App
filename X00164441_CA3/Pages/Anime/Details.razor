@@ -3,16 +3,16 @@
 
 <AnimeCard Image="@AnimeInfo.Image">
     <Header>
-        @AnimeInfo.Title
+        <MudText Typo="Typo.h3">@AnimeInfo.Title</MudText>
     </Header>
     <Content>
-        <MudText Typo="Typo.h5">@($"Type: {AnimeInfo.Type}")</MudText>
+        <MudText Typo="Typo.h5" Class="mb-2">@($"Type: {AnimeInfo.Type}")</MudText>
             <MudText Typo="Typo.h5">
                 @($"Plot Summary: {AnimeInfo.Description}")
         </MudText>
-        <MudText Typo="Typo.h5">@($"Genres: {string.Join(", ", AnimeInfo.Genres ?? Enumerable.Empty<string>())}")</MudText>
-            <MudText Typo="Typo.h5">@($"Released: {AnimeInfo.ReleaseDate}")</MudText>
-            <MudText Typo="Typo.h5">@($"Status: {AnimeInfo.Status}")</MudText>
+        <MudText Typo="Typo.h5" Class="mb-2">@($"Genres: {string.Join(", ", AnimeInfo.Genres ?? Enumerable.Empty<string>())}")</MudText>
+            <MudText Typo="Typo.h5" Class="mb-2">@($"Released: {AnimeInfo.ReleaseDate}")</MudText>
+            <MudText Typo="Typo.h5" Class="mb-2">@($"Status: {AnimeInfo.Status}")</MudText>
         </Content>
     </AnimeCard>
 
@@ -21,7 +21,7 @@
     [Parameter]
     public string AnimeId { get; set; } = null!;
 
-    protected AnimeInfo AnimeInfo { get; set; } = new();
+    protected AnimeDetails AnimeInfo { get; set; } = new();
 
     [Inject]
     protected IGogoAnimeClient Client { get; set; } = null!;
@@ -31,7 +31,7 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        var (statusCode, info) = await Client.GetAnimeInfo(AnimeId);
+        var (statusCode, info) = await Client.GetAnimeDetails(AnimeId);
 
         if (statusCode != HttpStatusCode.OK)
             Snackbar.Add(statusCode.ToString(), Severity.Error);

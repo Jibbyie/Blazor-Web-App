@@ -1,61 +1,99 @@
 ﻿@page "/"
 @inherits IndexBase
 
-<PageTitle>Anime online</PageTitle>
+<PageTitle>Popular animes</PageTitle>
 
-<MudPaper>
-    <MudToolBar>
-        <MudSpacer />
-        <MudTextField @bind-Value="SearchQuery"
-                      Adornment="Adornment.Start"
-                      AdornmentIcon="@Icons.Filled.Search"
-                      AdornmentColor="Color.Primary"
-                      Placeholder="Search..."
-                      Margin="Margin.Dense"
-                      Variant="Variant.Outlined"
-                      Clearable="true"
-                      DebounceInterval="5"
-                      OnClearButtonClick="() => SearchList = null"
-                      OnDebounceIntervalElapsed="SearchAnimes" />
-    </MudToolBar>
-    <MudGrid Spacing="2">
-        @if (SearchList == null)
-        {
-            @foreach (var episode in PaginatedList.Results)
-            {
-                <MudItem md="4" xs="12"
-                 @onclick="@(() => NavigationManager.NavigateTo($"/details/{episode.Id}"))">
-                    <AnimeCard Image="@episode.Image">
-                        <Content>
-                            <MudText Typo="Typo.h5">@episode.Title</MudText>
-                            <MudText Typo="Typo.body1"
-                             Align="Align.Center">
-                                @($"Episode {episode.EpisodeNumber}")
-                            </MudText>
-                        </Content>
-                    </AnimeCard>
-                </MudItem>
-            }
-        }
-        else
-        {
-            <MudText>@($"Results found: {SearchList.Results.Count}")</MudText>
+<MudGrid Spacing="2">
+    <MudItem md="12" Class="pa-0 mx-0 mb-3">
+        <MudPaper Class="py-2">
+            <MudToolBar>
+                <MudSpacer />
+                <MudTextField @bind-Value="SearchQuery"
+                              Adornment="Adornment.Start"
+                              AdornmentIcon="@Icons.Filled.Search"
+                              AdornmentColor="Color.Primary"
+                              Placeholder="Search..."
+                              Margin="Margin.Dense"
+                              Variant="Variant.Outlined"
+                              Clearable="true"
+                              DebounceInterval="5"
+                              OnClearButtonClick="() => {SearchList = null; SearchQuery = null;}"
+                              OnDebounceIntervalElapsed="SearchAnimes" />
+            </MudToolBar>
+        </MudPaper>
+    </MudItem>
+    @if (SearchList == null)
+    {
+        <MudGrid Spacing="2">
+            <MudItem md="10">
+                @if (TopAiring != null)
+                {
+                    <MudPaper Class="pa-3">
+                        <MudText Typo="Typo.h4" Class="mb-3">Popular animes</MudText>
+                        <MudGrid Spacing="2">
+                            @foreach (var anime in TopAiring.Results)
+                            {
+                                <MudItem md="4" xs="12"
+                             @onclick="@(() => NavigationManager.NavigateTo($"/details/{anime.Id}"))">
+                                    <AnimeCard Image="@anime.Image">
+                                        <Content>
+                                            <MudText Typo="Typo.h5">@anime.Title</MudText>
+                                            <MudText Typo="Typo.body1">
+                                                @($"Genres: {string.Join(", ", anime.Genres)}")
+                                            </MudText>
+                                        </Content>
+                                    </AnimeCard>
+                                </MudItem>
+                            }
+                        </MudGrid>
+                    </MudPaper>
+                }
+            </MudItem>
+            <MudItem md="2">
+                @if (RecentEpisodes != null)
+                {
+                    <MudPaper Class="pa-1">
+                        <MudText Typo="Typo.h5" Class="mt-2">Recent episodes</MudText>
+                        <MudList>
+                            @foreach (var episode in RecentEpisodes.Results)
+                            {
+                                <MudListItem OnClick="@(() => NavigationManager.NavigateTo($"/details/{episode.Id}"))">
+                                    <MudImage Src="@episode.Image" Height="100" Width="160" />
+                                    <div>
+                                        <MudText Typo="Typo.body1">@episode.Title</MudText>
+                                        <MudText Typo="Typo.body2">
+                                            @($"Episode {episode.EpisodeNumber}")
+                                        </MudText>
+                                    </div>
+                                </MudListItem>
+                            }
+                        </MudList>
+                    </MudPaper>
+                }
+            </MudItem>
+        </MudGrid>
+    }
+    else
+    {
+        <MudItem md="12">
+            <MudGrid Spacing="2">
+                <MudItem md="12">
+                    <MudText>@($"Results found: {SearchList.Results.Count}")</MudText>
+                    </MudItem>
 
-            @foreach (var result in SearchList.Results)
-            {
-                <MudItem md="4" xs="12"
-                 @onclick="@(() => NavigationManager.NavigateTo($"/details/{result.Id}"))">
-                    <AnimeCard Image="@result.Image">
-                        <Content>
-                            <MudText Typo="Typo.h5">@result.Title</MudText>
-                            <MudText Typo="Typo.body1"
-                             Align="Align.Center">
-                                @($"Episode {result.ReleaseDate}")
-                            </MudText>
-                        </Content>
-                    </AnimeCard>
-                </MudItem>
-            }
-        }
-    </MudGrid>
-</MudPaper>
+                    @foreach (var result in SearchList.Results)
+                {
+                    <MudItem md="4" xs="12"
+                     @onclick="@(() => NavigationManager.NavigateTo($"/details/{result.Id}"))">
+                        <AnimeCard Image="@result.Image">
+                            <Content>
+                                <MudText Typo="Typo.h5">@result.Title</MudText>
+                                <MudText Typo="Typo.body1">@result.ReleaseDate</MudText>
+                            </Content>
+                        </AnimeCard>
+                    </MudItem>
+                }
+            </MudGrid>
+        </MudItem>
+    }
+</MudGrid>

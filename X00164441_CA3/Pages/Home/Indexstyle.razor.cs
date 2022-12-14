@@ -8,7 +8,8 @@ namespace X00164441_CA3.Pages.Home
 {
     public class IndexBase : ComponentBase
     {
-        protected PaginatedList<RecentEpisode> PaginatedList { get; set; } = new();
+        protected PaginatedList<RecentEpisode>? RecentEpisodes { get; set; } = new();
+        protected PaginatedList<Models.Anime>? TopAiring { get; set; } = new();
         protected PaginatedList<SearchResult>? SearchList { get; set; } = null;
 
         protected string? SearchQuery { get; set; }
@@ -24,19 +25,15 @@ namespace X00164441_CA3.Pages.Home
 
         protected override async Task OnInitializedAsync()
         {
-            var (statusCode, list) = await Client.GetRecentEpisodes();
-
-            if (statusCode != HttpStatusCode.OK)
-                Snackbar.Add(statusCode.ToString(), Severity.Error);
-            else
-                PaginatedList = list!;
+            TopAiring = await Client.GetTopAiring();
+            RecentEpisodes = await Client.GetRecentEpisodes();
         }
 
         protected async Task SearchAnimes()
         {
             if (!string.IsNullOrEmpty(SearchQuery))
             {
-                SearchList = await Client.Search(SearchQuery);
+                SearchList = await Client.SearchAnime(SearchQuery);
             }
         }
     }
