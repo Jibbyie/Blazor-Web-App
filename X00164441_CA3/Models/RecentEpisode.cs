@@ -11,7 +11,7 @@ namespace X00164441_CA3.Models
         public string EpisodeId { get; set; } = null!;
 
         [JsonPropertyName("episodeNumber")]
-        public int EpisodeNumber { get; set; } 
+        public int EpisodeNumber { get; set; }
 
         [JsonPropertyName("title")]
         public string Title { get; set; } = null!;

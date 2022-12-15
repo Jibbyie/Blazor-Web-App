@@ -1,10 +1,15 @@
 {
   "ExpandedNodes": [
     "",
+    "\\UnitTests",
     "\\X00164441_CA3",
     "\\X00164441_CA3\\Pages",
-    "\\X00164441_CA3\\Pages\\Home"
+    "\\X00164441_CA3\\Pages\\Anime",
+    "\\X00164441_CA3\\Pages\\Home",
+    "\\X00164441_CA3\\Services",
+    "\\X00164441_CA3\\Shared",
+    "\\X00164441_CA3\\Theme"
   ],
-  "SelectedNode": "\\X00164441_CA3.sln",
+  "SelectedNode": "\\UnitTests\\UnitTest2.cs",
   "PreviewInSolutionExplorer": false
 }

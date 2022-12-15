@@ -20,4 +20,3 @@ namespace X00164441_CA3.Models
         public List<string> Genres { get; set; } = null!;
     }
 }
- 
